@@ -1,0 +1,3 @@
+/home/fyn/daily_exercise/exercise/analyse_dav/build/CMakeFiles/rebuild_cache.dir
+/home/fyn/daily_exercise/exercise/analyse_dav/build/CMakeFiles/edit_cache.dir
+/home/fyn/daily_exercise/exercise/analyse_dav/build/CMakeFiles/dav_analyser.dir
