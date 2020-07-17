@@ -1,0 +1,6 @@
+devel_space: /home/fyn/daily_exercise/exercise/videotobag/devel
+install: false
+install_space: /home/fyn/daily_exercise/exercise/videotobag/install
+profile: default
+source_space: /home/fyn/daily_exercise/exercise/videotobag/src
+workspace: /home/fyn/daily_exercise/exercise/videotobag

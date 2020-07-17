@@ -43,7 +43,7 @@ void ImageRenamer::renameImg()
     }
 
     std::string id = intToString(i);
-    std::string suffix(".png");
+    std::string suffix(".jpg");
     cv::String img_new_name = img_output_path_ + cv::String(id) + cv::String(suffix);
     cv::imwrite(img_new_name, img);
   }

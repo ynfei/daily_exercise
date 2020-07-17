@@ -2,8 +2,8 @@
 
 int main()
 {
-  cv::String img_input_folder = "/home/fyn/fr1/desk/";
-  cv::String img_output_folder = "/home/fyn/fr1/new_desk/";
+  cv::String img_input_folder = "/home/fyn/video_ca/video/3/3_3";
+  cv::String img_output_folder = "/home/fyn/video_ca/video/3/3_31/";
 
   std::cout << "Rename img..." << std::endl;
 

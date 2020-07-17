@@ -15,8 +15,8 @@ int main()
 {
   cv::namedWindow("DAV", cv::WINDOW_AUTOSIZE);
   cv::VideoCapture vcap;
-  vcap.open("/home/fyn/video_ca/video/4/3.dav");
-  cv::String output_path("/home/fyn/video_ca/video/4/3/");
+  vcap.open("/home/fyn/Downloads/camera_calibration/2020-07-16/4.dav");
+  cv::String output_path("/home/fyn/Downloads/camera_calibration/2020-07-16/4_cali/");
 
   cv::Mat frame;
   int count = 0;
