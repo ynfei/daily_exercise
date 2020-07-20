@@ -1,6 +1,8 @@
 cmake_minimum_required(VERSION 2.8.3)
 project(videobag)
 
+add_definitions(-std=c++11)
+
 find_package(catkin REQUIRED COMPONENTS
   cv_bridge
   rosbag
@@ -8,6 +10,7 @@ find_package(catkin REQUIRED COMPONENTS
 )
 
 include_directories(
+  include
   ${catkin_INCLUDE_DIRS}
 )
 

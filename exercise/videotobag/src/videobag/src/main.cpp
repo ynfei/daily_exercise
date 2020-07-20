@@ -4,6 +4,8 @@
 #include <opencv2/highgui/highgui.hpp>
 #include <cv_bridge/cv_bridge.h>
 
+#include "tic_toc.h"
+
 long getTotalFrame(const cv::VideoCapture& cap)
 {
   return cap.get(CV_CAP_PROP_FRAME_COUNT);
@@ -16,13 +18,14 @@ cv::Mat getCvMatImgFromCap(cv::VideoCapture& cap)
   return img;
 }
 
-void writeCvMatToBag(const std::string& topic, const cv::Mat& input_img, rosbag::Bag& output_bag)
+void writeCvMatToBag(const std::string& topic, const cv::Mat& input_img, rosbag::Bag& output_bag,
+                     const ros::Time& timestamp)
 {
   std_msgs::Header header;
   header.frame_id = "image_frame";
   header.stamp = ros::Time::now();
   sensor_msgs::ImagePtr image_msg = cv_bridge::CvImage(header, "bgr8", input_img).toImageMsg();
-  output_bag.write(topic, ros::Time::now(), image_msg);
+  output_bag.write(topic, timestamp, image_msg);
 }
 
 void showImg(const cv::Mat& img)
@@ -40,21 +43,27 @@ void videoToBag(const std::string& input_video_path, const std::string& output_b
   bag.open(output_bag_path, rosbag::bagmode::Write);
 
   cv::VideoCapture cap(input_video_path);
-  long total_frame = getTotalFrame(cap);
 
+  int total_frame = 0;
+  ros::Time timestamp = ros::Time::now();
   while (ros::ok())
   {
     cv::Mat frame = getCvMatImgFromCap(cap);
+
     if (frame.empty())
     {
       std::cout << "error, no image" << std::endl;
       break;
     }
 
-    writeCvMatToBag(topic, frame, bag);
+    writeCvMatToBag(topic, frame, bag, timestamp);
 
-    loop_rate.sleep();
+    //相机的频率为25Hz,所以时间间隔为0.04s
+    timestamp += ros::Duration(0.04);
+
+    total_frame++;
   }
+  std::cout << "total frame from video: " << total_frame << std::endl;
 
   bag.close();
   cap.release();
@@ -65,8 +74,9 @@ int main(int argc, char** argv)
   ros::init(argc, argv, "rosbag_recode_node");
   ros::NodeHandle nh;
 
-  std::string output_bag_path("/media/fyn/DDB2B37488AA702D/video_ca/video/4/3.bag");
-  std::string input_video_path("/media/fyn/DDB2B37488AA702D/video_ca/video/4/20200714_163747.dav");
+  std::string output_bag_path("/home/fyn/camera.bag");
+  std::string input_video_path("/media/fyn/DDB2B37488AA702D/gaoxinxing/crossroads/"
+                               "10.86.37.102_01_20200717160950862.mp4");
 
   std::cout << "start write video to bag..." << std::endl;
 
